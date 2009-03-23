@@ -4,6 +4,7 @@ class ShellOutArg(object):
 
     def __init__(self, cmd_string, arg_name):
         self._cmd_string = cmd_string
+        self._arg = None
         if len(arg_name) == 1:
             self._arg_name = " -" + arg_name
             self._longopt = False
@@ -14,34 +15,34 @@ class ShellOutArg(object):
 
     def __getattr__(self, x):
         cmd = self._cmd_string + self._arg_name
-        if len(self._args) > 0:
+        if self._arg:
             if self._longopt:
                 cmd += "="
             else:
                 cmd += " "
-            cmd += " ".join(['"%s"' % x for x in self._args])
+            cmd += "\"%s\"" % self._arg
        
         return self.__class__(cmd, x)
 
+    def __getitem__(self, arg):
+        self._arg = arg
+        self._called = True
+        return self
+ 
     def __call__(self, *args):
-        if not self._called:
-            self._args = args
-            self._called = True
-            return self
-        else:
-            import commands
+        import commands
 
-            cmd = self._cmd_string + self._arg_name
-            if len(self._args) > 0:
-                if self._longopt:
-                    cmd += "="
-                else:
-                    cmd += " "
-                cmd += " ".join(['"%s"' % x for x in self._args])
-            if len(args) > 0:
-                cmd += " " + " ".join(['"%s"' % x for x in args])
+        cmd = self._cmd_string + self._arg_name
+        if self._arg:
+            if self._longopt:
+                cmd += "="
+            else:
+                cmd += " "
+            cmd += "\"%s\"" % self._arg
+        if len(args) > 0:
+            cmd += " " + " ".join(['"%s"' % x for x in args])
 
-            return commands.getoutput(cmd)
+        return commands.getoutput(cmd)
 
 
 class ShellOutCommand(object):
