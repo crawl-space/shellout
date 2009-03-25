@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Copyright (c) 2009 James Bowes <jbowes@dangerouslyinc.com>
 #
@@ -22,22 +22,23 @@
 
 import shellout as so
 
-print "============================================="
-print
-print so.ls.l.si("/")
-print 
-print "============================================="
-print 
-print so.svn.help()
-print
-print "============================================="
-print
-print so.ps.a.u.x()
-print
-print "============================================="
-print
-print so.ls.color["always"]("/")
-print
-print "============================================="
-print
-print so.grep("model name", "/proc/cpuinfo")
+
+def print_formatted(input):
+    """
+    Prints output in a specific format.
+
+    :Parameters:
+       - `input`: the input to print.
+    """
+    print("=============================================\n")
+    print(input)
+    print("\n")
+
+
+if __name__ == '__main__':
+    # examples!
+    print_formatted(so.ls.l.si("/"))
+    print_formatted(so.svn.help())
+    print_formatted(so.ps.a.u.x())
+    print_formatted(so.ls.color["always"]("/"))
+    print_formatted(so.grep("model name", "/proc/cpuinfo"))
