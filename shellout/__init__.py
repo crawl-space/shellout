@@ -1,5 +1,3 @@
-#!/usr/bin/python
-#
 # Copyright (c) 2009 James Bowes <jbowes@dangerouslyinc.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -81,7 +79,10 @@ class ShellOutCommand(object):
 
         to_run = self._cmd + " " + " ".join(['"%s"' % x for x in args])
 
-        return commands.getoutput(to_run)
+        results = commands.getstatusoutput(to_run)
+        if results[0] != 0:
+            raise OSError(results)
+        return results[1]
 
 
 class ShellOutModule(object):
