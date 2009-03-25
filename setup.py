@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Copyright (c) 2009 James Bowes <jbowes@dangerouslyinc.com>
 #
@@ -23,11 +23,14 @@
 
 from distutils.core import setup
 
-setup(name="shellout",
-      version="0.1",
-      description="Make your shelled out calls look like genuine OO code",
-      author="James Bowes",
-      author_email="jbowes@dangerouslyinc.com",
-      url="http://github.com/jbowes/shellout",
-      py_modules=["shellout"],
-      )
+setup(
+    name="shellout",
+    version="0.1",
+    description = " Make your shelled out calls look like genuine OO code",
+    author = "James Bowes",
+    author_email = 'jbowes@dangerouslyinc.com',
+    url = "http://github.com/jbowes/shellout/",
+    platforms = ['any'],
+    license = "BSD",
+    py_modules=["shellout"],
+)

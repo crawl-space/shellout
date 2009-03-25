@@ -1,5 +1,3 @@
-#!/usr/bin/python
-#
 # Copyright (c) 2009 James Bowes <jbowes@dangerouslyinc.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,6 +17,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+
 
 class ShellOutArg(object):
 
@@ -41,14 +40,14 @@ class ShellOutArg(object):
             else:
                 cmd += " "
             cmd += "\"%s\"" % self._arg
-       
+
         return self.__class__(cmd, x)
 
     def __getitem__(self, arg):
         self._arg = arg
         self._called = True
         return self
- 
+
     def __call__(self, *args):
         import commands
 
@@ -66,7 +65,7 @@ class ShellOutArg(object):
 
 
 class ShellOutCommand(object):
-    
+
     _soa = ShellOutArg
 
     def __init__(self, cmd):
@@ -80,7 +79,10 @@ class ShellOutCommand(object):
 
         to_run = self._cmd + " " + " ".join(['"%s"' % x for x in args])
 
-        return commands.getoutput(to_run)
+        results = commands.getstatusoutput(to_run)
+        if results[0] != 0:
+            raise OSError(results)
+        return results[1]
 
 
 class ShellOutModule(object):
