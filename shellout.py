@@ -18,6 +18,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+"""
+shellout provides an OO-like interface to running shell commands.
+
+Example::
+    import shellout as so
+    print so.echo("hello, world")
+"""
+
+
+import sys
+
 
 class ShellOutArg(object):
 
@@ -87,6 +98,9 @@ class ShellOutCommand(object):
 
 class ShellOutModule(object):
 
+    # Hack this in so we can still describe the module at the top of the file
+    __doc__ = sys.modules[__name__].__doc__
+
     def __init__(self):
         self._soc = ShellOutCommand
         self._soa = ShellOutArg
@@ -95,5 +109,4 @@ class ShellOutModule(object):
         return self._soc(x)
 
 
-import sys
 sys.modules[__name__] = ShellOutModule()
