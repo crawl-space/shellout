@@ -25,7 +25,7 @@ from setuptools import setup
 
 setup(
     name = "shellout",
-    version = "0.1",
+    version = "0.2",
     description = "Make your shelled out calls look like genuine OO code",
     author = "James Bowes",
     author_email = "jbowes@dangerouslyinc.com",
