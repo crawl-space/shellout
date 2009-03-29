@@ -42,3 +42,4 @@ if __name__ == '__main__':
     print_formatted(so.ps.a.u.x())
     print_formatted(so.ls.color["always"]("/"))
     print_formatted(so.grep("model name", "/proc/cpuinfo"))
+    print_formatted(so.echo('with "both" \'quotes\''))

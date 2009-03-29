@@ -29,53 +29,52 @@ Example::
 
 import sys
 
+class ShellOutQuoter(object):
+    def _shell_safe_string(self, *args):
+        def quote(s):
+            s = s.replace('\\','\\\\') # escape backslashes
+            s = s.replace('"','\\"')   # escape double quotes
+            return '"%s"' % (s,)
+        return ' '.join(map(quote, args))
 
-class ShellOutArg(object):
+
+class ShellOutArg(ShellOutQuoter):
 
     def __init__(self, cmd_string, arg_name):
         self._cmd_string = cmd_string
-        self._arg = None
+        self._arg_value = None
         if len(arg_name) == 1:
-            self._arg_name = " -" + arg_name
-            self._longopt = False
+            self._arg = "-" + arg_name
+            self._arg_fmt_string = self._arg + " %s"
         else:
-            self._arg_name = " --" + arg_name
-            self._longopt = True
-        self._called = False
+            self._arg = "--" + arg_name
+            self._arg_fmt_string = self._arg + "=%s"
+
+    def _set_arg_value(self, arg):
+        if self._arg_value is not None:
+            raise ValueError("option %s already set to \"%s\"" % (self._arg,))
+        self._arg_value = arg
+        self._arg = self._arg_fmt_string % (self._shell_safe_string(arg),)
 
     def __getattr__(self, x):
-        cmd = self._cmd_string + self._arg_name
-        if self._arg:
-            if self._longopt:
-                cmd += "="
-            else:
-                cmd += " "
-            cmd += "\"%s\"" % self._arg
-
-        return self.__class__(cmd, x)
+        return self.__class__(str(self), x)
 
     def __getitem__(self, arg):
-        self._arg = arg
-        self._called = True
+        self._set_arg_value(arg)
         return self
+    
+    def __str__(self):
+        return self._cmd_string + " " + self._arg
 
     def __call__(self, *args):
         import commands
-
-        cmd = self._cmd_string + self._arg_name
-        if self._arg:
-            if self._longopt:
-                cmd += "="
-            else:
-                cmd += " "
-            cmd += "\"%s\"" % self._arg
+        cmd = str(self)
         if len(args) > 0:
-            cmd += " " + " ".join(['"%s"' % x for x in args])
-
+            cmd += " " + self._shell_safe_string(*args)
         return commands.getoutput(cmd)
 
 
-class ShellOutCommand(object):
+class ShellOutCommand(ShellOutQuoter):
 
     _soa = ShellOutArg
 
@@ -87,9 +86,7 @@ class ShellOutCommand(object):
 
     def __call__(self, *args):
         import commands
-
-        to_run = self._cmd + " " + " ".join(['"%s"' % x for x in args])
-
+        to_run = self._shell_safe_string(self._cmd, *args)
         results = commands.getstatusoutput(to_run)
         if results[0] != 0:
             raise OSError(results)
