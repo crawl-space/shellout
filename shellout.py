@@ -38,6 +38,19 @@ class ShellOutQuoter(object):
         return ' '.join(map(quote, args))
 
 
+class ShellError(OSError):
+
+    def __init__(self, command, exit_code, output):
+        self.command = command
+        self.exit_code = exit_code
+        self.output = output
+    
+    def __str__(self):
+        return "Command '%s' failed with exit code %s:\n%s" % (
+            self.command,
+            self.exit_code,
+            self.output)
+
 class ShellOutArg(ShellOutQuoter):
 
     def __init__(self, cmd_string, arg_name):
@@ -77,6 +90,7 @@ class ShellOutArg(ShellOutQuoter):
 class ShellOutCommand(ShellOutQuoter):
 
     _soa = ShellOutArg
+    ShellError = ShellError
 
     def __init__(self, cmd):
         self._cmd = cmd
@@ -86,10 +100,10 @@ class ShellOutCommand(ShellOutQuoter):
 
     def __call__(self, *args):
         import commands
-        to_run = self._shell_safe_string(self._cmd, *args)
+        to_run = self._cmd + ' ' + self._shell_safe_string(*args)
         results = commands.getstatusoutput(to_run)
         if results[0] != 0:
-            raise OSError(results)
+            raise self.ShellError(to_run, *results)
         return results[1]
 
 
