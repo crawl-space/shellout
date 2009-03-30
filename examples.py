@@ -37,9 +37,9 @@ def print_formatted(input):
 
 if __name__ == '__main__':
     # examples!
-    print_formatted(so.ls.l.si("/"))
+    print_formatted(so.ls.l.a("/"))
     print_formatted(so.svn.help())
-    print_formatted(so.ps.a.u.x())
+    print_formatted(so.ps.a.x())
     print_formatted(so.ls.color["always"]("/"))
-    print_formatted(so.grep("model name", "/proc/cpuinfo"))
     print_formatted(so.echo('with "both" \'quotes\''))
+    print_formatted(so.grep("model name", "/proc/cpuinfo"))
