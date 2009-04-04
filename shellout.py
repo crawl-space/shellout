@@ -28,13 +28,16 @@ Example::
 
 
 import sys
+import types
+
 
 class ShellOutQuoter(object):
     def _shell_safe_string(self, *args):
+
         def quote(s):
-            s = s.replace('\\','\\\\') # escape backslashes
-            s = s.replace('"','\\"')   # escape double quotes
-            return '"%s"' % (s,)
+            s = s.replace('\\', '\\\\') # escape backslashes
+            s = s.replace('"', '\\"')   # escape double quotes
+            return '"%s"' % s
         return ' '.join(map(quote, args))
 
 
@@ -44,12 +47,13 @@ class ShellError(OSError):
         self.command = command
         self.exit_code = exit_code
         self.output = output
-    
+
     def __str__(self):
         return "Command '%s' failed with exit code %s:\n%s" % (
             self.command,
             self.exit_code,
             self.output)
+
 
 class ShellOutArg(ShellOutQuoter):
 
@@ -65,9 +69,9 @@ class ShellOutArg(ShellOutQuoter):
 
     def _set_arg_value(self, arg):
         if self._arg_value is not None:
-            raise ValueError("option %s already set to \"%s\"" % (self._arg,))
+            raise ValueError("option %s already set to \"%s\"" % self._arg)
         self._arg_value = arg
-        self._arg = self._arg_fmt_string % (self._shell_safe_string(arg),)
+        self._arg = self._arg_fmt_string % self._shell_safe_string(arg)
 
     def __getattr__(self, x):
         return self.__class__(str(self), x)
@@ -75,7 +79,7 @@ class ShellOutArg(ShellOutQuoter):
     def __getitem__(self, arg):
         self._set_arg_value(arg)
         return self
-    
+
     def __str__(self):
         return self._cmd_string + " " + self._arg
 
@@ -107,7 +111,7 @@ class ShellOutCommand(ShellOutQuoter):
         return results[1]
 
 
-class ShellOutModule(object):
+class ShellOutModule(types.ModuleType):
 
     # Hack this in so we can still describe the module at the top of the file
     __doc__ = sys.modules[__name__].__doc__
