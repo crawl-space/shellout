@@ -4,3 +4,4 @@ dist
 MANIFEST
 build
 *.egg-info
+*.pdf
