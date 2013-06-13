@@ -23,6 +23,14 @@
 
 from setuptools import setup
 
+long_description = ""
+try:
+    f = open('README.rst')
+    long_description = f.read()
+    f.close()
+except Exception as e:
+    print str(e)  # If there's an issue, don't worry.
+
 setup(
     name = "shellout",
     version = "0.2",
