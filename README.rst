@@ -1,3 +1,11 @@
+.. image:: https://pypip.in/v/shellout/badge.png
+    :target: https://crate.io/packages/shellout/
+    :alt: Latest PyPI version
+
+.. image:: https://pypip.in/d/shellout/badge.png
+    :target: https://crate.io/packages/shellout/
+    :alt: Number of PyPI downloads
+
 ``shellout`` provides an OO-like interface to running shell commands.
 
 Usage
