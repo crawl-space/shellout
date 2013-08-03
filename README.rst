@@ -6,6 +6,9 @@
     :target: https://crate.io/packages/shellout/
     :alt: Number of PyPI downloads
 
+.. image:: http://b.repl.ca/v1/License-MIT-red.png
+    :alt: MIT License
+
 ``shellout`` provides an OO-like interface to running shell commands.
 
 Usage
