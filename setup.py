@@ -32,22 +32,22 @@ except Exception as e:
     print str(e)  # If there's an issue, don't worry.
 
 setup(
-    name = "shellout",
-    version = "0.2",
-    description = "Make your shelled out calls look like genuine OO code",
-    author = "James Bowes",
-    author_email = "jbowes@dangerouslyinc.com",
-    url = "http://github.com/jbowes/shellout/",
-    platforms = ['any'],
-    license = "MIT",
-    keywords = ["cli", "exec", "shell", "subprocess"],
+    name="shellout",
+    version="0.2",
+    description="Make your shelled out calls look like genuine OO code",
+    author="James Bowes",
+    author_email="jbowes@dangerouslyinc.com",
+    url="http://github.com/jbowes/shellout/",
+    platforms=['any'],
+    license="MIT",
+    keywords=["cli", "exec", "shell", "subprocess"],
 
-    classifiers = [
-          "Development Status :: 4 - Beta",
-          "Intended Audience :: Developers",
-          "License :: OSI Approved :: MIT License",
-          "Topic :: Software Development :: Libraries",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Libraries",
     ],
 
-    py_modules = ["shellout"],
+    py_modules=["shellout"],
 )

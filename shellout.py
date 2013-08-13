@@ -35,8 +35,8 @@ class ShellOutQuoter(object):
     def _shell_safe_string(self, *args):
 
         def quote(s):
-            s = s.replace('\\', '\\\\') # escape backslashes
-            s = s.replace('"', '\\"')   # escape double quotes
+            s = s.replace('\\', '\\\\')  # escape backslashes
+            s = s.replace('"', '\\"')    # escape double quotes
             return '"%s"' % s
         return ' '.join(map(quote, args))
 
