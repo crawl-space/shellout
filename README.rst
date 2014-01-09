@@ -6,7 +6,7 @@
     :target: https://crate.io/packages/shellout/
     :alt: Number of PyPI downloads
 
-.. image:: http://b.repl.ca/v1/license-MIT-red.png
+.. image:: http://b.repl.ca/v1/license-MIT-orange.png
     :target: COPYING
     :alt: MIT License
 
