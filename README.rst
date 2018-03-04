@@ -1,8 +1,8 @@
-.. image:: https://pypip.in/v/shellout/badge.png
+.. image:: https://img.shields.io/pypi/v/shellout.svg
     :target: https://crate.io/packages/shellout/
     :alt: Latest PyPI version
 
-.. image:: https://pypip.in/d/shellout/badge.png
+.. image:: https://img.shields.io/pypi/dm/shellout.svg
     :target: https://crate.io/packages/shellout/
     :alt: Number of PyPI downloads
 
